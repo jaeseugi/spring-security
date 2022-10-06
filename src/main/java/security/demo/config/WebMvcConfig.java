@@ -5,6 +5,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
+
 /**
  * packageName :  security.demo.config
  * fileName : WebMvcConfig
@@ -19,6 +24,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @PersistenceUnit
+    EntityManagerFactory emf;
 
     // 스프링 뷰트 시큐리티를 사용하면 해당 웹 어플리케이션에 모든 URL이 인증이 필요한 홈페이지가 된다.
     @Override
