@@ -3,6 +3,7 @@ package security.demo.config;
 // 사용하지않는 import 정리 : 컨트롤 + 옵션 + o
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
  */
 
 @Configuration
-@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true) // Secured 어노테이션 활성화, preAuthrorize와 postAuthorize 어노테이션 활성화
 public class SecurityConfig {
 
     // 해당 메소스의 리턴되는 오브첵트를 IoC로 등록해준다.
@@ -42,6 +43,7 @@ public class SecurityConfig {
                 .antMatchers("/manager/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_MANAGER')")
                 // /manager/**의 경로로 접속시 인증과 권한(ROLE_ADMIN)이 필요하다.
                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+                // 그외의 UrlPattern들에 대해서는 허용
                 // 그외의 UrlPattern들에 대해서는 허용
                 .anyRequest().permitAll()
                 // 권한이 없을때 로그인 페이지로 이동
